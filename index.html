@@ -190,20 +190,20 @@ html[lang=es] .lang [data-b=es],html[lang=en] .lang [data-b=en]{color:var(--or);
  <h3 data-l="es">Progreso de la recomp</h3><h3 data-l="en">Recomp progress</h3>
  <p class="date">2026-11-10</p>
  <div class="meter"><div class="t"><span data-l="es">Traducción a C++ · ~3 980 funciones, 0 errores</span><span data-l="en">C++ translation · ~3,980 functions, 0 errors</span><b>100%</b></div><div class="bar"><div class="fill" style="--v:1"></div></div></div>
- <div class="meter"><div class="t"><span data-l="es">Arranque · 4 de 6 etapas</span><span data-l="en">Boot · 4 of 6 stages</span><b>67%</b></div><div class="bar"><div class="fill" style="--v:.67"></div></div></div>
- <div class="meter blk"><div class="t"><span data-l="es">Imagen en pantalla y menú</span><span data-l="en">Picture on screen and menu</span><b data-l="es">por verificar</b><b data-l="en">to verify</b></div><div class="bar"></div></div>
+ <div class="meter"><div class="t"><span data-l="es">Arranque · 5 de 6 etapas</span><span data-l="en">Boot · 5 of 6 stages</span><b>83%</b></div><div class="bar"><div class="fill" style="--v:.83"></div></div></div>
+ <div class="meter blk"><div class="t"><span data-l="es">Nivel 1: carga, pero se queda en negro</span><span data-l="en">Level 1: loads, but stays black</span><b data-l="es">bloqueo</b><b data-l="en">blocked</b></div><div class="bar"></div></div>
  <div data-l="es"><ul>
-  <li>Etapas: 1 arranque y módulos IOP ✓ · 2 RenderWare ✓ · 3 lectura del disco ✓ · 4 vídeo de arranque ✓ · 5 menú · 6 jugable.</li>
+  <li>Etapas: 1 arranque y módulos IOP ✓ · 2 RenderWare ✓ · 3 lectura del disco ✓ · 4 vídeo de arranque ✓ · 5 menús y memory card ✓ · 6 jugable.</li>
   <li>Traduce el código MIPS R5900 a C++ con PS2Recomp; límites de función sacados de Ghidra.</li>
   <li>Arranca en macOS, carga los 7 módulos IOP del disco y lee con el lector propio del juego.</li>
-  <li>El vídeo de arranque se decodifica entero: el DMA del juego hacia el IPU alimenta el decodificador, y el juego pasa al siguiente vídeo.</li><li>Ahora: comprobar que la imagen y el menú se ven bien y avanzar hasta una partida.</li>
+  <li>El vídeo de arranque se decodifica entero: el DMA del juego hacia el IPU alimenta el decodificador, y el juego pasa al siguiente vídeo.</li><li>Recorre título, menús y selección de partida, guarda en la memory card y carga el nivel 1 del modo historia.</li><li>Ahora: el nivel se dibuja pero queda tapado por un fundido a negro que no se abre; el menú tiene texturas corruptas y va lento.</li>
   <li>El código generado se produce en local desde tu disco y no se distribuye.</li>
  </ul></div>
  <div data-l="en"><ul>
-  <li>Stages: 1 boot and IOP modules ✓ · 2 RenderWare ✓ · 3 disc reads ✓ · 4 intro video ✓ · 5 menu · 6 playable.</li>
+  <li>Stages: 1 boot and IOP modules ✓ · 2 RenderWare ✓ · 3 disc reads ✓ · 4 intro video ✓ · 5 menus and memory card ✓ · 6 playable.</li>
   <li>Translates the MIPS R5900 code to C++ with PS2Recomp; function boundaries come from Ghidra.</li>
   <li>Boots on macOS, loads the disc's 7 IOP modules and reads through the game's own loader.</li>
-  <li>The intro video decodes in full: the game's DMA to the IPU now feeds the decoder, and the game moves on to the next video.</li><li>Now: check that the picture and menu look right and get into a race.</li>
+  <li>The intro video decodes in full: the game's DMA to the IPU now feeds the decoder, and the game moves on to the next video.</li><li>Goes through title, menus and game select, saves to the memory card and loads story mode level 1.</li><li>Now: the level is drawn but stays covered by a fade to black that never opens; the menu has corrupted textures and runs slow.</li>
   <li>Generated code is produced locally from your disc and never distributed.</li>
  </ul></div>
 </div></div>
