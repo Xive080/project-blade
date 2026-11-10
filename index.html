@@ -90,13 +90,13 @@ footer{color:var(--mut);font-size:.9rem;border-top:1px solid var(--line);padding
 <h3>Recomp</h3>
 <div data-l="es"><p>Traducir el código MIPS R5900 a C++ y enlazarlo con un runtime.</p><ul>
 <li data-tip-es="18 «funciones» con error eran texto ASCII que el analizador tomó por código; se saltan." data-tip-en="18 failing “functions” were ASCII text the analyzer mistook for code; they are skipped.">3 316 funciones traducidas con PS2Recomp, 0 errores.</li>
-<li>El ejecutable nativo compila, arranca y abre ventana y audio en macOS.</li>
-<li data-tip-es="El juego reintenta en bucle sceSifBindRpc: espera a un módulo propio del IOP (CD o sonido) que el runtime aún no atiende." data-tip-en="The game keeps retrying sceSifBindRpc: it waits for one of its own IOP modules (CD or sound) that the runtime does not serve yet.">Siguiente obstáculo: un servidor RPC del IOP que el juego espera.</li>
+<li>El ejecutable nativo compila, arranca en macOS y carga los 7 módulos IOP del disco.</li>
+<li data-tip-es="Al crear su primera lista de memoria, el motor llama a una función de reserva que aún no está puesta." data-tip-en="When creating its first memory list, the engine calls an allocator that has not been set yet.">Siguiente obstáculo: la inicialización de RenderWare.</li>
 <li>El código generado se produce en local desde tu disco y no se distribuye.</li></ul></div>
 <div data-l="en"><p>Translate the MIPS R5900 code to C++ and link it against a runtime.</p><ul>
 <li data-tip-es="18 «funciones» con error eran texto ASCII que el analizador tomó por código; se saltan." data-tip-en="18 failing “functions” were ASCII text the analyzer mistook for code; they are skipped.">3,316 functions translated with PS2Recomp, 0 errors.</li>
-<li>The native executable builds, boots and opens a window and audio on macOS.</li>
-<li data-tip-es="El juego reintenta en bucle sceSifBindRpc: espera a un módulo propio del IOP (CD o sonido) que el runtime aún no atiende." data-tip-en="The game keeps retrying sceSifBindRpc: it waits for one of its own IOP modules (CD or sound) that the runtime does not serve yet.">Next hurdle: an IOP RPC server the game is waiting for.</li>
+<li>The native executable builds, boots on macOS and loads the disc’s 7 IOP modules.</li>
+<li data-tip-es="Al crear su primera lista de memoria, el motor llama a una función de reserva que aún no está puesta." data-tip-en="When creating its first memory list, the engine calls an allocator that has not been set yet.">Next hurdle: RenderWare initialisation.</li>
 <li>Generated code is produced locally from your disc and never distributed.</li></ul></div>
 <div class="bar" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><span class="barcap" data-l="es">ARRANCA · AÚN SIN IMAGEN</span><span class="barcap" data-l="en">BOOTS · NO PICTURE YET</span>
 </div>
