@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Project Blade</title>
+<meta name="description" content="Project Blade: unofficial tools for studying and porting AirBlade (PS2, PAL) · Herramientas no oficiales para estudiar y portar AirBlade.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bungee&family=Chakra+Petch:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: night city, sodium and neon. Speed lines, slanted panels like board decks, trick-score HUD. */
+:root{--bg:#070b12;--bg2:#0e1622;--ink:#e6f0f5;--mut:#8ea3b0;--cy:#2fe6ff;--lime:#c6ff3a;--hot:#ff4fa3;--line:#1d2c3c;
+--disp:'Bungee',Impact,sans-serif;--body:'Chakra Petch',system-ui,sans-serif;--mono:'IBM Plex Mono',ui-monospace,monospace;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:18px/1.6 var(--body);
+background-image:linear-gradient(115deg,transparent 0 46%,rgba(47,230,255,.05) 46% 47%,transparent 47% 100%),radial-gradient(ellipse at 80% -10%,#123044 0,transparent 55%),radial-gradient(ellipse at 0% 110%,#2a1030 0,transparent 50%);
+padding-block:28px 72px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));position:relative;overflow-x:hidden}
+main{max-width:920px;margin:0 auto;position:relative;display:flex;flex-direction:column;gap:40px}
+.hud{display:flex;flex-wrap:wrap;gap:8px 24px;font:600 .72rem/1.4 var(--mono);color:var(--mut);border-block:1px solid var(--line);padding:12px 0;letter-spacing:.06em;padding-right:120px;text-transform:uppercase}
+.hud b{color:var(--lime);font-weight:600}
+.lang{position:absolute;top:0;right:0;display:flex;gap:6px}
+.lang button{font:600 .72rem var(--mono);background:var(--bg2);color:var(--ink);border:1px solid var(--line);padding:9px 11px;cursor:pointer;transform:skewX(-12deg)}
+.lang button:hover{border-color:var(--cy)}
+html[lang=es] .lang [data-b=es],html[lang=en] .lang [data-b=en]{background:var(--cy);color:#04121a;border-color:var(--cy)}
+html[lang=es] [data-l=en],html[lang=en] [data-l=es]{display:none}
+.hero{display:flex;align-items:center;gap:22px;flex-wrap:wrap;padding-top:6px}
+.hero svg{width:clamp(70px,15vw,116px);height:auto;flex:none;filter:drop-shadow(0 0 12px rgba(47,230,255,.5))}
+h1{font:400 clamp(2.8rem,11vw,6rem)/.9 var(--disp);margin:0;color:var(--ink);font-style:italic;transform:skewX(-8deg);text-shadow:4px 4px 0 #0a3a4a,0 0 26px rgba(47,230,255,.35);text-wrap:balance}
+h1 em{font-style:normal;color:var(--cy)}
+.lead{font-size:1.2rem;max-width:62ch;margin:0}
+.tagline{font:600 .8rem/1.8 var(--mono);color:var(--lime);letter-spacing:.14em;margin:0}
+.note{color:var(--mut);font-size:.98rem;margin:0;max-width:70ch}
+h2{font:400 1.6rem/1 var(--disp);color:var(--cy);margin:0 0 14px;display:flex;align-items:center;gap:14px;font-style:italic}
+h2::after{content:"";flex:1;height:2px;background:repeating-linear-gradient(90deg,var(--cy) 0 18px,transparent 18px 28px);opacity:.5}
+h3{font:400 1.35rem/1.1 var(--disp);margin:6px 0 8px;color:var(--ink)}
+.grid{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr))}
+.card{position:relative;padding:22px;min-width:0;background:var(--bg2);border:1px solid var(--line);border-left:4px solid var(--cy);clip-path:polygon(0 0,calc(100% - 18px) 0,100% 18px,100% 100%,18px 100%,0 calc(100% - 18px))}
+.card:nth-child(2){border-left-color:var(--hot)}
+.card ul{padding-left:1.1em;margin:.4em 0 0}
+.card li{margin:.25em 0}
+.stage{font:600 .7rem var(--mono);letter-spacing:.12em;color:var(--lime)}
+.card:nth-child(2) .stage{color:var(--hot)}
+code{font:.88em var(--mono);color:var(--lime);overflow-wrap:anywhere}
+a{color:var(--cy)}
+.bar{display:flex;gap:3px;margin-top:16px}
+.bar i{flex:1;height:10px;background:#16222f;transform:skewX(-20deg)}
+.bar i.on{background:linear-gradient(90deg,var(--cy),var(--lime));box-shadow:0 0 8px rgba(198,255,58,.4)}
+.card:nth-child(2) .bar i.on{background:var(--hot);box-shadow:0 0 8px rgba(255,79,163,.4)}
+.barcap{display:block;font:600 .7rem var(--mono);color:var(--mut);margin-top:6px;letter-spacing:.08em}
+.links{display:flex;flex-wrap:wrap;gap:12px}
+.links a{font:600 .85rem var(--mono);text-decoration:none;padding:10px 16px;border:1px solid var(--cy);color:var(--cy);transform:skewX(-12deg)}
+.links a:hover{background:var(--cy);color:#04121a}
+footer{color:var(--mut);font-size:.9rem;border-top:1px solid var(--line);padding-top:18px}
+[data-tip-es]{cursor:help}
+.shot{outline:2px solid var(--lime);outline-offset:4px}
+.fx{position:fixed;pointer-events:none;z-index:60;font:400 1rem var(--disp);color:var(--lime);text-shadow:2px 2px 0 #0a3a4a;white-space:nowrap;transform:translate(-50%,-50%)}
+.trail{position:fixed;pointer-events:none;z-index:55;height:2px;background:linear-gradient(90deg,transparent,var(--cy));transform-origin:right center}
+.tip{position:fixed;z-index:70;max-width:min(320px,calc(100vw - 16px));background:#04121a;border:1px solid var(--cy);padding:10px 12px;font:.9rem/1.45 var(--body);color:var(--ink);box-shadow:0 8px 30px rgba(0,0,0,.6)}
+.tip b{display:block;font:600 .7rem var(--mono);color:var(--lime);letter-spacing:.1em;margin-bottom:4px}
+.tip.miss b{color:var(--hot)}
+</style>
+</head>
+<body>
+<main>
+<div class="lang"><button data-b="es" onclick="setLang('es')">ES</button><button data-b="en" onclick="setLang('en')">EN</button></div>
+
+<div class="hud"><span data-tip-es="Decomp y Recomp son dos caminos independientes hacia el mismo objetivo: que el juego corra fuera de la PS2." data-tip-en="Decomp and Recomp are two independent paths to the same goal: running the game outside the PS2.">TRACKS <b>2</b></span><span data-tip-es="Plataformas a las que apunta el proyecto. Solo se ha probado en macOS." data-tip-en="Platforms the project aims for. Only tested on macOS so far.">TARGETS <b>MAC · WIN · LINUX</b></span><span data-tip-es="El juego usa RenderWare. En el port se sustituye por librw, una reimplementación libre." data-tip-en="The game uses RenderWare. The port replaces it with librw, a free reimplementation.">ENGINE <b>RENDERWARE → LIBRW</b></span></div>
+<header class="hero"><svg viewBox="0 0 120 80" aria-hidden="true" fill="none" stroke="#2fe6ff" stroke-width="4" stroke-linecap="round"><path d="M10 44c20-10 80-10 100 0-20 10-80 10-100 0z"/><path d="M28 52l-6 12M92 52l6 12" stroke="#c6ff3a"/><path d="M4 20h34M14 30h30M0 10h24" stroke="#ff4fa3" stroke-width="3"/></svg><h1>Project <em>Blade</em></h1></header>
+<p class="tagline" data-l="en">BRING YOUR OWN DISC</p><p class="tagline" data-l="es">TRAE TU PROPIO DISCO</p>
+<p class="lead" data-l="es">Herramientas no oficiales para estudiar y portar a PC un juego de hoverboard de PlayStation 2: <em>AirBlade</em>, versión PAL SCES-50246. Dos líneas de trabajo: Decomp y Recomp.</p><p class="lead" data-l="en">Unofficial tools to study and port a PlayStation 2 hoverboard game, <em>AirBlade</em> (PAL, SCES-50246), to PC. Two tracks: Decomp and Recomp.</p>
+<p class="note" data-l="es">Proyecto no oficial, sin relación con Criterion, Sony ni Namco. No incluye ni distribuye el juego ni sus recursos.</p><p class="note" data-l="en">Unofficial project, not affiliated with Criterion, Sony or Namco. It does not include or distribute the game or its assets.</p>
+
+<section>
+<h2 data-l="es">Dos pistas</h2><h2 data-l="en">Two tracks</h2>
+<div class="grid">
+<div class="card" data-tip-es="Se decompila solo el código propio del juego; RenderWare se trata como caja negra y se sustituye por librw." data-tip-en="Only the game's own code is decompiled; RenderWare is treated as a black box and replaced by librw."><span class="stage" data-l="es">PISTA 1 · EN CURSO</span><span class="stage" data-l="en">TRACK 1 · IN PROGRESS</span>
+<h3>Decomp</h3>
+<div data-l="es"><p>Reconstruir en C el código del juego, con byte-match contra el ejecutable original.</p><ul>
+<li data-tip-es="La cadena «MW MIPS C Compiler (2.4.1.01)» está en el ejecutable; se confirmó compilando y comparando byte a byte." data-tip-en="The string “MW MIPS C Compiler (2.4.1.01)” is in the executable; confirmed by compiling and comparing byte by byte.">Compilador original identificado: CodeWarrior MIPS 2.4.1.01, <code>-O4,p</code>.</li>
+<li>343 funciones ya coinciden byte a byte con el original.</li>
+<li>Matching automático: proponer C, compilar, comparar y reintentar; permuter y búsqueda de flags para las difíciles.</li>
+<li>Bloque de RenderWare localizado y excluido del matching.</li></ul></div>
+<div data-l="en"><p>Rebuild the game's code in C, byte-matching the original executable.</p><ul>
+<li data-tip-es="La cadena «MW MIPS C Compiler (2.4.1.01)» está en el ejecutable; se confirmó compilando y comparando byte a byte." data-tip-en="The string “MW MIPS C Compiler (2.4.1.01)” is in the executable; confirmed by compiling and comparing byte by byte.">Original compiler identified: CodeWarrior MIPS 2.4.1.01, <code>-O4,p</code>.</li>
+<li>343 functions already match the original byte for byte.</li>
+<li>Automatic matching: propose C, compile, compare and retry; permuter and flag search for the hard ones.</li>
+<li>RenderWare block located and excluded from matching.</li></ul></div>
+<div class="bar" data-tip-es="343 de unas 3 100 funciones detectadas: aproximadamente un 11 %. Cuenta también SDK y motor, que no se decompilan." data-tip-en="343 of about 3,100 detected functions: roughly 11%. That total includes SDK and engine code, which is not decompiled." aria-hidden="true"><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><span class="barcap" data-l="es">BYTE-MATCH · 343 / ~3 100</span><span class="barcap" data-l="en">BYTE-MATCH · 343 / ~3,100</span>
+</div>
+<div class="card" data-tip-es="Traducir el ejecutable a C++ y ejecutarlo sobre el runtime de PS2Recomp." data-tip-en="Translate the executable to C++ and run it on the PS2Recomp runtime."><span class="stage" data-l="es">PISTA 2 · EMPEZADA</span><span class="stage" data-l="en">TRACK 2 · STARTED</span>
+<h3>Recomp</h3>
+<div data-l="es"><p>Traducir el código MIPS R5900 a C++ y enlazarlo con un runtime.</p><ul>
+<li data-tip-es="18 «funciones» con error eran texto ASCII que el analizador tomó por código; se saltan." data-tip-en="18 failing “functions” were ASCII text the analyzer mistook for code; they are skipped.">3 316 funciones traducidas con PS2Recomp, 0 errores.</li>
+<li>El ejecutable nativo compila, arranca y abre ventana y audio en macOS.</li>
+<li data-tip-es="El juego reintenta en bucle sceSifBindRpc: espera a un módulo propio del IOP (CD o sonido) que el runtime aún no atiende." data-tip-en="The game keeps retrying sceSifBindRpc: it waits for one of its own IOP modules (CD or sound) that the runtime does not serve yet.">Siguiente obstáculo: un servidor RPC del IOP que el juego espera.</li>
+<li>El código generado se produce en local desde tu disco y no se distribuye.</li></ul></div>
+<div data-l="en"><p>Translate the MIPS R5900 code to C++ and link it against a runtime.</p><ul>
+<li data-tip-es="18 «funciones» con error eran texto ASCII que el analizador tomó por código; se saltan." data-tip-en="18 failing “functions” were ASCII text the analyzer mistook for code; they are skipped.">3,316 functions translated with PS2Recomp, 0 errors.</li>
+<li>The native executable builds, boots and opens a window and audio on macOS.</li>
+<li data-tip-es="El juego reintenta en bucle sceSifBindRpc: espera a un módulo propio del IOP (CD o sonido) que el runtime aún no atiende." data-tip-en="The game keeps retrying sceSifBindRpc: it waits for one of its own IOP modules (CD or sound) that the runtime does not serve yet.">Next hurdle: an IOP RPC server the game is waiting for.</li>
+<li>Generated code is produced locally from your disc and never distributed.</li></ul></div>
+<div class="bar" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><span class="barcap" data-l="es">ARRANCA · AÚN SIN IMAGEN</span><span class="barcap" data-l="en">BOOTS · NO PICTURE YET</span>
+</div>
+</div>
+</section>
+
+<section>
+<h2 data-l="es">Cómo encajan</h2><h2 data-l="en">How they fit</h2>
+<p data-l="es">El decomp documenta símbolos, estructuras y comportamiento, y sirve de referencia para comprobar el resultado. La recompilación busca llegar antes a algo jugable reutilizando el código original. Lo aprendido en uno alimenta al otro.</p><p data-l="en">The decomp documents symbols, structures and behaviour, and is the reference results are checked against. Recompilation aims to reach something playable sooner by reusing the original code. What one learns feeds the other.</p>
+</section>
+
+<section>
+<h2 data-l="es">Repositorios</h2><h2 data-l="en">Repositories</h2>
+<div class="links"><a href="https://github.com/Xive080/project-blade-decomp">project-blade-decomp</a><a href="https://github.com/Xive080/project-blade-recomp">project-blade-recomp</a></div>
+<p class="note" data-l="es" style="margin-top:14px">Hace falta tu propio disco original: este proyecto no lo incluye ni lo distribuirá.</p><p class="note" data-l="en" style="margin-top:14px">You need your own original disc: this project does not include and will not distribute it.</p>
+</section>
+
+<footer>
+<span data-l="es">Proyecto de aficionado sin relación con Criterion, Sony ni Namco. «AirBlade» es marca de sus propietarios y se cita solo para identificar el juego. Proyecto hermano: <a href="https://xive080.github.io/project-stake/">Project Stake</a>.</span>
+<span data-l="en">Fan project, not affiliated with Criterion, Sony or Namco. "AirBlade" is a trademark of its owners and is named only to identify the game. Sister project: <a href="https://xive080.github.io/project-stake/">Project Stake</a>.</span>
+</footer>
+</main>
+<script>
+function setLang(l){document.documentElement.lang=l;try{localStorage.setItem('lang',l)}catch(e){}}
+(function(){var l;try{l=localStorage.getItem('lang')}catch(e){}
+if(!l)l=(navigator.language||'en').slice(0,2)==='es'?'es':'en';
+document.documentElement.lang=l})();
+</script>
+<script>
+(function(){
+var calm=window.matchMedia&&matchMedia('(prefers-reduced-motion:reduce)').matches;
+var TR=['OLLIE','KICKFLIP','GRIND','360 SPIN','MANUAL','BOARD SLIDE','WALL RIDE','McTWIST'];
+var combo=0,score=0,comboT=0,tip=null,tipT=0,last=null;
+function pop(x,y,txt){
+ var t=document.createElement('div');t.className='fx';t.textContent=txt;t.style.left=x+'px';t.style.top=y+'px';
+ document.body.appendChild(t);
+ if(calm){setTimeout(function(){t.remove()},700);return}
+ t.animate([{opacity:1,transform:'translate(-50%,-50%) skewX(-10deg) scale(.8)'},{opacity:1,transform:'translate(-50%,-140%) skewX(-10deg) scale(1.1)',offset:.3},{opacity:0,transform:'translate(-50%,-220%) skewX(-10deg) scale(1)'}],{duration:900,easing:'ease-out'}).onfinish=function(){t.remove()};
+ for(var i=0;i<3;i++){var s=document.createElement('div');s.className='trail';var w=40+Math.random()*60;
+  s.style.cssText+='left:'+(x-w-10)+'px;top:'+(y-8+i*8)+'px;width:'+w+'px';document.body.appendChild(s);
+  s.animate([{opacity:.9,transform:'scaleX(1)'},{opacity:0,transform:'scaleX(.2)'}],{duration:350+i*80,easing:'ease-out'}).onfinish=(function(q){return function(){q.remove()}})(s)}
+}
+function showTip(x,y,el){
+ var lang=document.documentElement.lang==='es'?'es':'en';
+ var tgt=el&&el.closest?el.closest('[data-tip-'+lang+']'):null;
+ if(tip){tip.remove();tip=null}if(last){last.classList.remove('shot');last=null}clearTimeout(tipT);
+ tip=document.createElement('div');tip.className='tip'+(tgt?'':' miss');
+ if(tgt){tgt.classList.add('shot');last=tgt;tip.innerHTML='<b>'+(lang==='es'?'COMBO x':'COMBO x')+combo+' · '+score+' PTS</b>';tip.appendChild(document.createTextNode(tgt.getAttribute('data-tip-'+lang)))}
+ else{tip.innerHTML='<b>'+(lang==='es'?'CAÍDA':'BAIL')+'</b>'+(lang==='es'?'Toca un dato resaltado.':'Tap a highlighted item.')}
+ document.body.appendChild(tip);
+ var w=tip.offsetWidth,h=tip.offsetHeight,px=x+20,py=y+20;
+ if(px+w>innerWidth-8)px=Math.max(8,x-w-20);if(py+h>innerHeight-8)py=Math.max(8,y-h-20);
+ tip.style.left=px+'px';tip.style.top=py+'px';
+ tipT=setTimeout(function(){if(tip){tip.remove();tip=null}if(last){last.classList.remove('shot');last=null}},4500);
+}
+document.addEventListener('pointerdown',function(e){
+ if(e.button>0||e.target.closest('button,a'))return;
+ var el=document.elementFromPoint(e.clientX,e.clientY),lang=document.documentElement.lang==='es'?'es':'en';
+ var hit=el&&el.closest&&el.closest('[data-tip-'+lang+']');
+ clearTimeout(comboT);
+ if(hit){combo++;var p=100*combo;score+=p;pop(e.clientX,e.clientY,TR[Math.floor(Math.random()*TR.length)]+' +'+p)}
+ else{combo=0;pop(e.clientX,e.clientY,lang==='es'?'CAÍDA':'BAIL')}
+ comboT=setTimeout(function(){combo=0},3000);
+ showTip(e.clientX,e.clientY,el);
+});
+})();
+</script>
+</body>
+</html>
