@@ -188,22 +188,22 @@ html[lang=es] .lang [data-b=es],html[lang=en] .lang [data-b=en]{color:var(--or);
 </div>
 <div class="r"><div class="panel">
  <h3 data-l="es">Progreso de la recomp</h3><h3 data-l="en">Recomp progress</h3>
- <p class="date">2026-11-10</p>
+ <p class="date">2026-11-11</p>
  <div class="meter"><div class="t"><span data-l="es">Traducción a C++ · ~3 980 funciones, 0 errores</span><span data-l="en">C++ translation · ~3,980 functions, 0 errors</span><b>100%</b></div><div class="bar"><div class="fill" style="--v:1"></div></div></div>
  <div class="meter"><div class="t"><span data-l="es">Arranque · 5 de 6 etapas</span><span data-l="en">Boot · 5 of 6 stages</span><b>83%</b></div><div class="bar"><div class="fill" style="--v:.83"></div></div></div>
- <div class="meter blk"><div class="t"><span data-l="es">Nivel 1: carga, pero se queda en negro</span><span data-l="en">Level 1: loads, but stays black</span><b data-l="es">bloqueo</b><b data-l="en">blocked</b></div><div class="bar"></div></div>
+ <div class="meter"><div class="t"><span data-l="es">Velocidad en el nivel 1 · ~32 de 50 V/s (PAL)</span><span data-l="en">Level 1 speed · ~32 of 50 V/s (PAL)</span><b>64%</b></div><div class="bar"><div class="fill" style="--v:.64"></div></div></div>
  <div data-l="es"><ul>
   <li>Etapas: 1 arranque y módulos IOP ✓ · 2 RenderWare ✓ · 3 lectura del disco ✓ · 4 vídeo de arranque ✓ · 5 menús y memory card ✓ · 6 jugable.</li>
   <li>Traduce el código MIPS R5900 a C++ con PS2Recomp; límites de función sacados de Ghidra.</li>
   <li>Arranca en macOS, carga los 7 módulos IOP del disco y lee con el lector propio del juego.</li>
-  <li>El vídeo de arranque se decodifica entero: el DMA del juego hacia el IPU alimenta el decodificador, y el juego pasa al siguiente vídeo.</li><li>Recorre título, menús y selección de partida, guarda en la memory card y carga el nivel 1 del modo historia.</li><li>Ahora: el nivel se dibuja pero queda tapado por un fundido a negro que no se abre; el menú tiene texturas corruptas y va lento.</li>
+  <li>El vídeo de arranque se decodifica entero: el DMA del juego hacia el IPU alimenta el decodificador, y el juego pasa al siguiente vídeo.</li><li>Recorre título, menús y selección de partida, guarda en la memory card y carga el nivel 1 del modo historia.</li><li>Ahora: el nivel 1 se juega y el personaje se dibuja (había un error en instrucciones MMI del traductor). Suena la música y los efectos con un mezclador SPU2 propio. El VU1 compilado y las rutas rápidas del GS lo llevan de unos 23 a unos 32 V/s; el PAL está fijo a 50 Hz.</li><li>Falla aún: la tabla y la sombra del jugador no se ven y el menú tiene un panel blanco que en PCSX2 no existe. No se ha completado ningún nivel; el volumen de un núcleo del audio no está verificado.</li><li>Cada cambio se comprueba con un modo determinista (mismos hashes de memoria y de imagen) y con una comparación contra PCSX2.</li>
   <li>El código generado se produce en local desde tu disco y no se distribuye.</li>
  </ul></div>
  <div data-l="en"><ul>
   <li>Stages: 1 boot and IOP modules ✓ · 2 RenderWare ✓ · 3 disc reads ✓ · 4 intro video ✓ · 5 menus and memory card ✓ · 6 playable.</li>
   <li>Translates the MIPS R5900 code to C++ with PS2Recomp; function boundaries come from Ghidra.</li>
   <li>Boots on macOS, loads the disc's 7 IOP modules and reads through the game's own loader.</li>
-  <li>The intro video decodes in full: the game's DMA to the IPU now feeds the decoder, and the game moves on to the next video.</li><li>Goes through title, menus and game select, saves to the memory card and loads story mode level 1.</li><li>Now: the level is drawn but stays covered by a fade to black that never opens; the menu has corrupted textures and runs slow.</li>
+  <li>The intro video decodes in full: the game's DMA to the IPU now feeds the decoder, and the game moves on to the next video.</li><li>Goes through title, menus and game select, saves to the memory card and loads story mode level 1.</li><li>Now: level 1 is playable and the character is drawn (the translator had wrong MMI instructions). Music and effects play through our own SPU2 mixer. A compiled VU1 and fast GS paths took it from about 23 to about 32 V/s; PAL is fixed at 50 Hz.</li><li>Still wrong: the board and the player's shadow are not visible, and the menu has a white panel that PCSX2 does not show. No level has been completed; one audio core's volume is not verified.</li><li>Every change is checked with a deterministic mode (same memory and image hashes) and against PCSX2.</li>
   <li>Generated code is produced locally from your disc and never distributed.</li>
  </ul></div>
 </div></div>
